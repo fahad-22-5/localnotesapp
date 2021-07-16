@@ -2,8 +2,16 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useFonts, RobotoMono_300Light, RobotoMono_400Regular } from "@expo-google-fonts/roboto-mono";
 import AppLoading from 'expo-app-loading';
+import { AntDesign } from '@expo/vector-icons';
+import firebase from 'firebase';
 
-function Note() {
+function Note({note}) {
+
+        const handledelete = () => {
+            const ChildRef = firebase.database().ref('localnotes-data').child(note.id);
+            ChildRef.remove();
+        }
+
         let [fontsLoaded] = useFonts({
           RobotoMono_300Light,
           RobotoMono_400Regular,
@@ -14,12 +22,11 @@ function Note() {
           } else {
     return (
             <View style={styles.note}>
-                <Text style={styles.text}>This is a note
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry </Text>
+                <Text style={styles.text}>{note.text}</Text>
                 <View style={styles.footer}>
-                <Text style={styles.footer}>09/07/2021</Text>
+                <Text style={styles.footer}>{note.date}</Text>
                 <TouchableOpacity>
-                    <Text style={styles.delete}>Delete</Text>    
+                    <AntDesign name="delete" size={24} color="black" onPress = {handledelete}/> 
                 </TouchableOpacity> 
                 </View>    
             </View>
@@ -44,7 +51,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontFamily: 'RobotoMono_400Regular',
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-between',
+        marginBottom: 5,
     },
     text:{
         fontFamily: 'RobotoMono_400Regular',

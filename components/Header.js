@@ -13,7 +13,7 @@ function Header() {
         } else {
     return (
         <View style = {styles.header}>
-            <Text style = {styles.title}>Local Notes</Text>
+            <Text style = {styles.title}>Fire Notes</Text>
         </View>
     )
 }
