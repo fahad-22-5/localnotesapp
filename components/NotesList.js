@@ -6,15 +6,13 @@ import Search from './Search';
 import { useEffect, useState } from 'react';
 import firebase from 'firebase';
 
-function NotesList({handlesearch}) {
+function NotesList({handlesearch, userName}) {
 
     const[notesList, SetNotesList] = useState([]);
 	const [searchText, SetsearchText] = useState('');
 
-    
-
     useEffect(() => {
-        const NoteRef = firebase.database().ref('localnotes-data');
+        const NoteRef = firebase.database().ref(userName);
         NoteRef.on('value', (snapshot)=> {
             const notes = snapshot.val();
             const container = [];
@@ -31,7 +29,7 @@ function NotesList({handlesearch}) {
         <View style={styles.list}>
             <ScrollView>
                 <Search handlesearch = {SetsearchText} />
-                <Add />
+                <Add userName = {userName}/>
                 {notesList && notesList.filter(note => note.text.includes(searchText)).map((note, index) => (<Note note = {note} key = {index}/>))}
             </ScrollView>
         </View>

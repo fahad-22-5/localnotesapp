@@ -4,7 +4,7 @@ import { useState } from 'react';
 import firebase from 'firebase';
 import 'react-native-get-random-values';
 
-function Add() {
+function Add({userName}) {
 
     const[noteText, setnoteText]  = useState('');
 
@@ -13,7 +13,7 @@ function Add() {
     };
 
     const saveNote = () =>{
-        const NoteRef = firebase.database().ref('localnotes-data');
+        const NoteRef = firebase.database().ref(userName);
         const date = new Date();
         const note = {
             text: noteText,

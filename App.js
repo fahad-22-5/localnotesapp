@@ -8,14 +8,15 @@ import { useState, useEffect } from 'react';
 import 'react-native-get-random-values';
 import { nanoid } from 'nanoid';
 import firebase from 'firebase';
+import Login from './components/Login';
+import { NativeRouter, Switch, Link, Route } from "react-router-native";
 
 
 export default function App() {
 
-    // const[notesList, SetNotesList] = useState([]);
+  const [userName, setuserName] = useState('');
 
-
-
+  // const[notesList, SetNotesList] = useState([]);
 	// useEffect(() => {
     //     const NoteRef = firebase.database().ref('localnotes-data');
     //     NoteRef.on('value', (snapshot)=> {
@@ -39,11 +40,16 @@ export default function App() {
 	};
 
   	return (
+      <NativeRouter>
     	<View style={styles.container}>
-      		<Header/>
-    		<NotesList/>
-      	<Navbar/>
+      	<Header/>
+        <Switch>
+    		  <Route path = "/Home" component = {() => <NotesList userName = {userName}/>}/>
+          <Login userLogin = {setuserName}/>
+      	  <Navbar/>
+        </Switch>
     	</View>
+      </NativeRouter>
   	);
 }
 
